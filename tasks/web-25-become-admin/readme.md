@@ -1,5 +1,5 @@
 ## Name: Стань админом
-
+To become an admin one should feed another with cookies. `http://<HOST>:33000`
 ## Files: 
 None
 ## Flag:

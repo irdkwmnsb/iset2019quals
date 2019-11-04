@@ -1,7 +1,7 @@
 version: "3"
 services:
   web-25-become-admin:
-    build: ""
+    build: ./
     volumes:
       - ./src:/var/www/html/
     ports:
