@@ -3,7 +3,6 @@ from flask import Flask, render_template_string, render_template, request
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'flag{e4rth_4nd_ch1k1b4mb0ni}'
-app.debug = True
 
 
 @app.route('/', methods=['GET', 'POST'])
