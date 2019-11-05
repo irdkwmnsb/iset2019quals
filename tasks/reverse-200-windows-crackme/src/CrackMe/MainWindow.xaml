@@ -1,0 +1,26 @@
+﻿<Window x:Class="CrackMe.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CrackMe"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="450" ResizeMode="NoResize">
+    <Grid>
+
+        <StackPanel x:Name="panel">
+            <Grid Height="30" Margin="25 100 25 50" Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="label" Grid.Column="0" FontSize="15" Content="License key"/>
+                <TextBox x:Name="licenseKey" Grid.Column="1" Grid.ColumnSpan="2" Height="23" TextWrapping="Wrap" Text=""/>
+            </Grid>
+            <Button x:Name="button" Content="Activate" Width="200" Height="50" Click="Button_Click"/>
+        </StackPanel>
+        <TextBlock x:Name="flag" Text="Hello, please enter your key" FontSize="15" Height="50" VerticalAlignment="Top" Margin="0,50,0,0"/>
+
+    </Grid>
+</Window>
