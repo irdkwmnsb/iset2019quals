@@ -1,0 +1,120 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"/>
+<script>
+    "use strict";
+
+    function addSelector() {
+        let elems = document.getElementsByClassName("selector");
+        let number = elems.length;
+        let newelem = elems[number - 1].cloneNode(true);
+        elems[number - 1].parentNode.insertBefore(newelem, elems[number - 1].nextSibling);
+        return false;
+    }
+
+    function lookup() {
+        let sel = [...document.getElementsByClassName("selector")];
+        let query = sel.reduce((res, el) => {
+            console.log(res);
+            if (res === undefined) {
+                return undefined;
+            }
+            let v = el.querySelector("[name=select]").value;
+            let f = parseInt(el.querySelector("[name=from]").value);
+            let t = parseInt(el.querySelector("[name=to]").value);
+            let r = {};
+            r[v] = {"$gte": f, "$lte": t};
+            res["$and"].push(r);
+            return res;
+        }, {"$and": []});
+        if (query !== undefined) {
+            console.log(JSON.stringify(query));
+            fetch("get", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(query)
+            }).then((resp) =>
+                resp.json()
+            ).then((resp) => {
+                console.log(resp);
+            });
+        }
+        return false;
+    }
+
+    function remove(form) {
+        const ar = [...form.parentElement.children];
+        if (ar.indexOf(form) === 1 && ar.length <= 3)
+            return false;
+        form.remove();
+        return false;
+    }
+</script>
+<style>
+    .container {
+        display: inline-grid;
+    }
+
+    .selector {
+        grid-column: 1;
+    }
+
+    .buttons {
+        grid-column: 2;
+        margin-left: 10px;
+    }
+
+    .fas {
+        cursor: pointer;
+    }
+
+    input[type=number] {
+        width: 40px;
+    }
+</style>
+<form class="container" onsubmit="return lookup()">
+    <label class="header">I'm looking for something to eat that has</label>
+    {#    cal,cal_from_fat,total_fat_g,total_fat_p,sodium_mg,sodium_p,
+    potassium_mg,potassium_p,total_carb_g,total_carb_p,fiber_g,fiber_p,
+    sugars_g,protein_g,vitamin_a_p,vitamin_c_p,calcium_p,iron_p #}
+    <div class="selector">
+        <label>
+            <select name="select">
+                <option value="cal">Calories (g)</option>
+                <option value="cal_from_fat">Calories from fat (g)</option>
+                <option value="total_fat_g">Total fat (g)</option>
+                <option value="total_fat_p">Total fat (%)</option>
+                <option value="sodium_mg">Sodium (mg)</option>
+                <option value="sodium_p">Sodium (%)</option>
+                <option value="potassium_mg">Potassium (mg)</option>
+                <option value="potassium_p">Potassium (%)</option>
+                <option value="total_carb_g">Total carbon (g)</option>
+                <option value="total_carb_p">Total carbon (%)</option>
+                <option value="fiber_g">Fiber (g)</option>
+                <option value="fiber_carb_p">Fiber (%)</option>
+                <option value="sugars_g">Sugars (g)</option>
+                <option value="protein_g">Protein (g)</option>
+                <option value="vitamin_a_p">Vitamin A (%)</option>
+                <option value="vitamin_c_p">Vitamin C (%)</option>
+                <option value="calcium_p">Calcium (%)</option>
+                <option value="iron_p">Iron (%)</option>
+            </select>
+        </label>
+        <label>
+            from
+            <input type="number" name="from" required>
+        </label>
+        <label>
+            to
+            <input type="number" name="to" required>
+        </label>
+        <i class="fas fa-times" onclick="return remove(this.parentElement)"></i>
+    </div>
+    <div class="buttons">
+        <i class="fas fa-plus" onclick="return addSelector()"></i>
+        <i class="fas fa-search" onclick="return lookup()"></i>
+    </div>
+</form>
+<table>
+
+</table>
