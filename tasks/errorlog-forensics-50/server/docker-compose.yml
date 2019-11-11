@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+    mysql:
+        build: .
+        restart: on-failure
+        volumes:
+            - mysqlvol:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: noonewillseeitanywaysonothingcomesuphere
+            MYSQL_DATABASE: app
+        ports:
+            - 33022:3306
+volumes:
+    mysqlvol:
