@@ -1,4 +1,5 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
 <script>
     "use strict";
 
@@ -13,7 +14,6 @@
     function lookup() {
         let sel = [...document.getElementsByClassName("selector")];
         let query = sel.reduce((res, el) => {
-            console.log(res);
             if (res === undefined) {
                 return undefined;
             }
@@ -26,7 +26,6 @@
             return res;
         }, {"$and": []});
         if (query !== undefined) {
-            console.log(JSON.stringify(query));
             fetch("get", {
                 method: 'POST',
                 headers: {
@@ -36,7 +35,17 @@
             }).then((resp) =>
                 resp.json()
             ).then((resp) => {
-                console.log(resp);
+                document.getElementById("results-box").style.display = "unset";
+                document.getElementById("results-message").innerText = resp.length ? "How about" : "Nothing found";
+                let ress = document.getElementById("results");
+                while (ress.firstChild) {
+                    ress.firstChild.remove();
+                }
+                resp.forEach((fruit) => {
+                    let new_el = document.createElement("li");
+                    new_el.innerText = fruit["name"];
+                    ress.appendChild(new_el);
+                });
             });
         }
         return false;
@@ -51,17 +60,37 @@
     }
 </script>
 <style>
+    html body {
+        min-height: 100%;
+        margin: 0;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .container {
         display: inline-grid;
+        margin: 5vh;
+        grid-template-columns: 1fr min-content;
+    }
+
+    .header {
+        font-size: 4vw;
     }
 
     .selector {
+        margin-top: 2vh;
         grid-column: 1;
     }
 
     .buttons {
         grid-column: 2;
         margin-left: 10px;
+        margin-top: 3vh;
+        white-space: nowrap;
     }
 
     .fas {
@@ -69,14 +98,36 @@
     }
 
     input[type=number] {
-        width: 40px;
+        width: 9vw;
+    }
+
+    select {
+        width: 20vw;
+    }
+
+    input, select {
+        height: 5vw;
+        border: none;
+        border-bottom: 1px solid gray;
+    }
+
+    body, input, select {
+        font-family: 'Lora', serif;
+        font-size: 3vw;
+    }
+
+    .results {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        margin-top: 10vh;
+        display: none;
     }
 </style>
 <form class="container" onsubmit="return lookup()">
     <label class="header">I'm looking for something to eat that has</label>
-    {#    cal,cal_from_fat,total_fat_g,total_fat_p,sodium_mg,sodium_p,
+    <!--  cal,cal_from_fat,total_fat_g,total_fat_p,sodium_mg,sodium_p,
     potassium_mg,potassium_p,total_carb_g,total_carb_p,fiber_g,fiber_p,
-    sugars_g,protein_g,vitamin_a_p,vitamin_c_p,calcium_p,iron_p #}
+    sugars_g,protein_g,vitamin_a_p,vitamin_c_p,calcium_p,iron_p -->
     <div class="selector">
         <label>
             <select name="select">
@@ -102,17 +153,22 @@
         </label>
         <label>
             from
-            <input type="number" name="from" required>
+            <input type="number" name="from" value="0" required>
         </label>
         <label>
             to
-            <input type="number" name="to" required>
+            <input type="number" name="to" value="0" required>
         </label>
         <i class="fas fa-times" onclick="return remove(this.parentElement)"></i>
     </div>
     <div class="buttons">
         <i class="fas fa-plus" onclick="return addSelector()"></i>
         <i class="fas fa-search" onclick="return lookup()"></i>
+    </div>
+    <div class="results" id="results-box">
+        <span id="results-message">How about</span>
+        <ul id="results">
+        </ul>
     </div>
 </form>
 <table>
