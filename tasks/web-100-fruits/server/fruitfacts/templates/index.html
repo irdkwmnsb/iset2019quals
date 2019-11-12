@@ -52,10 +52,8 @@
     }
 
     function remove(form) {
-        const ar = [...form.parentElement.children];
-        if (ar.indexOf(form) === 1 && ar.length <= 3)
-            return false;
-        form.remove();
+        if (document.getElementsByClassName("selector").length !== 1)
+            form.remove();
         return false;
     }
 </script>
