@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+    web_sqli:
+        build: ./
+        ports:
+            - 33501:80
+    mysql:
+        build: ./mysql
+        volumes:
+            - mysqlvol:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: nomatters
+            MYSQL_DATABASE: app
+volumes:
+    mysqlvol:
