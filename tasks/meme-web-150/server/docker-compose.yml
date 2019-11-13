@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  service:
+    build: .
+    restart: on-failure
+    read_only: true
+    deploy:
+      mode: replicated
+      replicas: 4
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 100m
+    ports:
+      - "33701:1337"
