@@ -1,0 +1,9 @@
+version: "3"
+services:
+  web-25-become-admin:
+    build: ./
+    volumes:
+      - ./src:/var/www/html/
+    ports:
+      - 33000:80
+    restart: always
