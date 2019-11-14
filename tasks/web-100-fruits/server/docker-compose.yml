@@ -15,12 +15,19 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: fruitfacts
       MONGO_INITDB_ROOT_PASSWORD: fruitfacts
+      
+  mongo-seed:
+    build: ./mongo-seed
+    depends_on:
+      - mongo
 
 #  mongo-express:
 #    image: mongo-express
 #    restart: always
 #    ports:
 #      - 8081:8081
+#    depends_on:
+#      - mongo
 #    environment:
 #      ME_CONFIG_MONGODB_ADMINUSERNAME: fruitfacts
 #      ME_CONFIG_MONGODB_ADMINPASSWORD: fruitfacts
