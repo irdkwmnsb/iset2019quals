@@ -37,8 +37,14 @@ orig_d = np.int16(orig_d)
 print(np.amin(orig_d), np.amax(orig_d))
 
 res = np.resize(res_ar.flatten(), orig_d.shape)
-new_d = np.bitwise_or(orig_d, res*32767)
+new_d = orig_d.copy()
+max_val = np.iinfo(orig_d.dtype).max
+for i in range(orig_d.shape[0]):
+    if res[i]:
+        new_d[i] = max_val
+
 print(np.amin(new_d), np.amax(new_d))
+print(new_d.dtype)
 
 wavio.write("task.wav", new_d, orig.rate)
 
