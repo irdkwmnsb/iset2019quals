@@ -78,7 +78,7 @@ namespace CrackMe
                 return;
             }
             int value = (int)reg.GetValue(new string(notSecretData));
-            if (value % 3571 != 0 && value % 2087 != 0 && value % 29 != 0)
+            if (value % 3571 != 0 || value % 2087 != 0 || value % 29 != 0 || value > 415685825)
             {
                 InvalidLicense();
                 return;
