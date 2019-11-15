@@ -3,4 +3,4 @@ services:
     static_host:
         build: ./
         ports:
-            - 33501:80
+            - 1337:80
