@@ -1,0 +1,6 @@
+version: '3.3'
+services:
+    static_host:
+        build: ./
+        ports:
+            - 33501:80
