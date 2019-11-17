@@ -1,0 +1,9 @@
+version: "3"
+services:
+  ppc-50-guess:
+    build: ./
+    volumes:
+      - ./:/opt/ppc-50-guess
+    ports:
+      - 33003:33003
+    restart: always
