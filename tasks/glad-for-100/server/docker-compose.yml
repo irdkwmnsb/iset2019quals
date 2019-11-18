@@ -1,0 +1,6 @@
+version: '3.3'
+services:
+    for_host:
+        build: ./
+        ports:
+            - 33032:80
