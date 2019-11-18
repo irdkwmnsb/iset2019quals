@@ -2,7 +2,7 @@ version: '3.3'
 services:
   service:
     build: .
-    restart: on-failure
+    restart: always
     read_only: true
     deploy:
       mode: replicated
